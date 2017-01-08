@@ -29,4 +29,11 @@ public class TimeTest {
 		
 		assertThat(underTest.minutesSinceStart(), is(90));
 	}
+	
+	@Test
+	public void shouldCalculateMinutesForAmTime() {
+		Time underTest = new Time("1:30 AM");
+		
+		assertThat(underTest.minutesSinceStart(), is(510));
+	}
 }

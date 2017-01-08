@@ -9,10 +9,11 @@ public class Time {
 
 	private static final int MIN_PER_HOUR = 60;
 
-	private static final Pattern timePattern = Pattern.compile("(\\d+):(\\d+) PM");
+	private static final Pattern timePattern = Pattern.compile("(\\d+):(\\d+) ([AP]M)");
 
 	public static final Time EARLIEST_START_TIME = new Time("5:00 PM");
-
+	public static final Time MIDNIGHT = new Time("12:00 AM");
+	
 	private Matcher matcher;
 
 	public Time(String asString) {
@@ -21,7 +22,7 @@ public class Time {
 	}
 
 	public int minutesSinceStart() {
-		return totalMinutes() - EARLIEST_START_TIME.totalMinutes();
+		return totalMinutes() - EARLIEST_START_TIME.totalMinutes() + amOffset();
 	}
 
 	private int totalMinutes() {
@@ -36,4 +37,11 @@ public class Time {
 		return parseInt(matcher.group(2));
 	}
 
+	private int amOffset() {
+		return isAm()? MIDNIGHT.totalMinutes(): 0;
+	}
+
+	private boolean isAm() {
+		return matcher.group(3).equals("AM");
+	}
 }

@@ -32,10 +32,10 @@ When is bedtime? I assume it's arbitrary. I'll also assume it's before midnight;
 
 It's a good idea to sketch out the things we think we'll need tests around. I'll use this as my checklist and prioritize them as I go.
 
-- [ ] times should be able to convert themselves to minutes relative to a base time -- 5:00 PM sounds reasonable since it's the earliest start time
-- [ ] parse times in the formats:
-    - [ ] hh:mm AM
-    - [ ] hh:mm PM
-    - [ ] h:mm PM
+- [x] times should be able to convert themselves to minutes relative to a base time -- 5:00 PM sounds reasonable since it's the earliest start time
+- [x] parse times in the formats:
+    - [x] hh:mm AM
+    - [x] hh:mm PM
+    - [x] h:mm PM
 - [ ] time objects should measure elapsed time in full hours (rounded up)
     
