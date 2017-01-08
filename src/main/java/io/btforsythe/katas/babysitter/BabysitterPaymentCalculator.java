@@ -10,9 +10,12 @@ public class BabysitterPaymentCalculator {
 	public BabysitterPaymentCalculator(Time bedTime) {
 		this.bedTime = bedTime;
 	}
+	
+	public int calculatePayment(String start, String end) {
+		return calculatePayment(new Time(start), new Time(end));
+	}
 
 	public int calculatePayment(Time startTime, Time endTime) {
 		return startTime.isOnOrBefore(bedTime)? 24: 16;
 	}
-
 }

@@ -12,26 +12,20 @@ public class BabysitterPaymentCalculatorTest {
 
 	private Time bedtime = new Time("9:30 PM");
 	
+	public BabysitterPaymentCalculator underTest = new BabysitterPaymentCalculator(bedtime);
+	
 	@Test
 	public void shouldPayBabysitterForASessionEndingBeforeBedTime() {
-		BabysitterPaymentCalculator underTest = new BabysitterPaymentCalculator(bedtime);
 		
-		Time startTime = new Time("6:00 PM");
-		Time endTime = new Time("8:00 PM");
-		
-		int payment = underTest.calculatePayment(startTime, endTime);
+		int payment = underTest.calculatePayment("6:00 PM", "8:00 PM");
 		
 		assertThat(payment, is(2*BEFORE_BEDTIME_RATE));
 	}
-	
+
 	@Test
 	public void shouldPayBabysitterForASessionBetweenBedTimeAndMidnight() {
-		BabysitterPaymentCalculator underTest = new BabysitterPaymentCalculator(bedtime);
 		
-		Time startTime = new Time("10:00 PM");
-		Time endTime = MIDNIGHT;
-		
-		int payment = underTest.calculatePayment(startTime, endTime);
+		int payment = underTest.calculatePayment("10:00 PM", "12:00 AM");
 		
 		assertThat(payment, is(2*AFTER_BEDTIME_RATE));
 	}
