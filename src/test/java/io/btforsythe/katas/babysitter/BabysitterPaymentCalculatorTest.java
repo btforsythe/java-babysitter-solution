@@ -16,7 +16,7 @@ public class BabysitterPaymentCalculatorTest {
 	public BabysitterPaymentCalculator underTest = new BabysitterPaymentCalculator(bedtime);
 	
 	@Test
-	public void shouldPayBabysitterForASessionEndingBeforeBedTime() {
+	public void shouldPayBabysitterForASessionEndingBeforeBedtime() {
 		
 		int payment = underTest.calculatePayment("6:00 PM", "8:00 PM");
 		
@@ -24,7 +24,7 @@ public class BabysitterPaymentCalculatorTest {
 	}
 
 	@Test
-	public void shouldPayBabysitterForASessionBetweenBedTimeAndMidnight() {
+	public void shouldPayBabysitterForASessionBetweenBedtimeAndMidnight() {
 		
 		int payment = underTest.calculatePayment("10:00 PM", "12:00 AM");
 		
@@ -40,7 +40,7 @@ public class BabysitterPaymentCalculatorTest {
 	}
 	
 	@Test
-	public void shouldPayBabysitterForASessionStartingBeforeBedTimeAndEndingBetweenBedTimeAndMidnight() {
+	public void shouldPayBabysitterForASessionStartingBeforeBedtimeAndEndingBetweenBedtimeAndMidnight() {
 		
 		int payment = underTest.calculatePayment("9:00 PM", "10:00 PM");
 		
