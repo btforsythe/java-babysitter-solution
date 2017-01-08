@@ -46,10 +46,10 @@ public class Time {
 		return matcher.group(3).equals("AM");
 	}
 
-	public int payableHoursSince(Time start) {
-		return max(0, (totalMinutes() - start.totalMinutes() + (MIN_PER_HOUR - 1))/MIN_PER_HOUR);
+	int payableHoursUntil(Time endTime) {
+		return max(0, (endTime.totalMinutes() - totalMinutes() + (Time.MIN_PER_HOUR - 1))/Time.MIN_PER_HOUR);
 	}
-
+	
 	public boolean isOnOrBefore(Time other) {
 		return totalMinutes() <= other.totalMinutes();
 	}
@@ -57,4 +57,5 @@ public class Time {
 	public boolean isOnOrAfter(Time other) {
 		return totalMinutes() >= other.totalMinutes();
 	}
+
 }

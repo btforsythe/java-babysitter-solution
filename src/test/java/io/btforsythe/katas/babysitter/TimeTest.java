@@ -42,7 +42,7 @@ public class TimeTest {
 		Time start = new Time("5:00 PM");
 		Time end = new Time("8:00 PM");
 		
-		assertThat(end.payableHoursSince(start), is(3));
+		assertThat(start.payableHoursUntil(end), is(3));
 	}
 	
 	@Test
@@ -50,7 +50,7 @@ public class TimeTest {
 		Time start = new Time("5:00 PM");
 		Time end = new Time("8:30 PM");
 		
-		assertThat(end.payableHoursSince(start), is(4));
+		assertThat(start.payableHoursUntil(end), is(4));
 	}
 	
 	@Test
@@ -58,7 +58,7 @@ public class TimeTest {
 		Time start = new Time("8:30 PM");
 		Time end = new Time("5:00 PM");
 		
-		assertThat(end.payableHoursSince(start), is(0));
+		assertThat(start.payableHoursUntil(end), is(0));
 	}
 	
 	@Test
