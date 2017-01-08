@@ -11,13 +11,13 @@ public class TimeTest {
 	public void shouldBeZeroMinutesForEarliestStartTime() {
 		Time underTest = Time.EARLIEST_START_TIME;
 		
-		assertThat(underTest.minutes(), is(0));
+		assertThat(underTest.minutesSinceStart(), is(0));
 	}
 	
 	@Test
 	public void shouldCalculateMinutesOnTheHour() {
 		Time underTest = new Time("6:00 PM");
 		
-		assertThat(underTest.minutes(), is(60));
+		assertThat(underTest.minutesSinceStart(), is(60));
 	}
 }

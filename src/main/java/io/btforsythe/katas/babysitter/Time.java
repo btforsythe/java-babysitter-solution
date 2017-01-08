@@ -10,9 +10,12 @@ public class Time {
 		this.asString = asString;
 	}
 
-	public int minutes() {
-		int referenceHour = Integer.parseInt(EARLIEST_START_TIME.asString.split(":")[0]);
-		return (Integer.parseInt(asString.split(":")[0]) - referenceHour)*60;
+	public int minutesSinceStart() {
+		return (hour() - EARLIEST_START_TIME.hour())*60;
+	}
+
+	private int hour() {
+		return Integer.parseInt(asString.split(":")[0]);
 	}
 
 }
