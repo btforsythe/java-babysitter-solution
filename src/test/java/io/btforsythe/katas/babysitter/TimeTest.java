@@ -63,4 +63,9 @@ public class TimeTest {
 	public void shouldNotBeOnOrBeforeForLaterTime() {
 		assertThat(MIDNIGHT.isOnOrBefore(EARLIEST_START_TIME), is(false));
 	}
+	
+	@Test
+	public void shouldBeAfterEarlierTime() {
+		assertThat(MIDNIGHT.isAfter(EARLIEST_START_TIME), is(true));
+	}
 }

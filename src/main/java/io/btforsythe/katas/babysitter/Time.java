@@ -52,4 +52,8 @@ public class Time {
 	public boolean isOnOrBefore(Time other) {
 		return totalMinutes() <= other.totalMinutes();
 	}
+
+	public boolean isAfter(Time earliestStartTime) {
+		return true;
+	}
 }

@@ -39,8 +39,9 @@ It's a good idea to sketch out the things we think we'll need tests around. I'll
     - [x] h:mm PM
 - [x] time objects should measure elapsed time in full hours (rounded up)
 - [x] time objects should know when they are on or before another time
+- [ ] time objects should know when they are after another time
 - [ ] simple payments
     - [x] before bedtime
     - [x] between bedtime and midnight
-    - [ ] after midnight
+    - [x] after midnight
     
