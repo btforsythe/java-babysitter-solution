@@ -68,4 +68,9 @@ public class TimeTest {
 	public void shouldBeAfterEarlierTime() {
 		assertThat(MIDNIGHT.isAfter(EARLIEST_START_TIME), is(true));
 	}
+	
+	@Test
+	public void shouldNotBeAfterLaterTime() {
+		assertThat(EARLIEST_START_TIME.isAfter(MIDNIGHT), is(false));
+	}
 }

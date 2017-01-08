@@ -53,7 +53,7 @@ public class Time {
 		return totalMinutes() <= other.totalMinutes();
 	}
 
-	public boolean isAfter(Time earliestStartTime) {
-		return true;
+	public boolean isAfter(Time other) {
+		return totalMinutes() > other.totalMinutes();
 	}
 }
