@@ -78,4 +78,9 @@ public class Time {
 	public boolean isOnOrAfter(Time other) {
 		return totalMinutes() >= other.totalMinutes();
 	}
+
+	@Override
+	public String toString() {
+		return asString;
+	}
 }
