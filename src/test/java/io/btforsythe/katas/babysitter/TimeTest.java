@@ -3,6 +3,8 @@ package io.btforsythe.katas.babysitter;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.regex.Pattern;
+
 import org.junit.Test;
 
 public class TimeTest {
