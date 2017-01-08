@@ -46,6 +46,6 @@ public class Time {
 	}
 
 	public int payableHoursSince(Time start) {
-		return 3;
+		return (totalMinutes() - start.totalMinutes() + (MIN_PER_HOUR - 1))/MIN_PER_HOUR;
 	}
 }

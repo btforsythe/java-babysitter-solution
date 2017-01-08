@@ -44,4 +44,12 @@ public class TimeTest {
 		
 		assertThat(end.payableHoursSince(start), is(3));
 	}
+	
+	@Test
+	public void shouldRoundUpPayableHours() {
+		Time start = new Time("5:00 PM");
+		Time end = new Time("8:30 PM");
+		
+		assertThat(end.payableHoursSince(start), is(4));
+	}
 }
