@@ -13,20 +13,33 @@ public class Time {
 	private static final Pattern timePattern = Pattern.compile("(\\d+):(\\d+) ([AP]M)");
 
 	public static final Time EARLIEST_START_TIME = new Time("5:00 PM");
-	public static final Time MIDNIGHT = new Time("12:00 AM");
+	public static final Time MIDNIGHT = new Time("12:00 AM") {
+		/**
+		 * Hacking midnight since it lies on the boundary.
+		 */
+		private final int totalMinutes = new Time("11:59 PM").totalMinutes() + 1;
+		
+		@Override
+		protected int totalMinutes() {
+			return totalMinutes;
+		}
+		
+	};
 	
+	private String asString;
 	private Matcher matcher;
 
 	public Time(String asString) {
+		this.asString = asString;
 		matcher = timePattern.matcher(asString);
 		matcher.matches();
 	}
 
-	public int minutesSinceStart() {
-		return totalMinutes() - EARLIEST_START_TIME.totalMinutes() + amOffset();
+	public int minutesSinceEarliest() {
+		return totalMinutes() + amOffset() - EARLIEST_START_TIME.totalMinutes();
 	}
 
-	private int totalMinutes() {
+	protected int totalMinutes() {
 		return hour()*MIN_PER_HOUR + minutes();
 	}
 
@@ -39,15 +52,23 @@ public class Time {
 	}
 
 	private int amOffset() {
-		return isAm()? MIDNIGHT.totalMinutes(): 0;
+		return isAfterMidnight() ? MIDNIGHT.totalMinutes(): 0;
 	}
 
+	private boolean isAfterMidnight() {
+		return isAm() && !isMidnight();
+	}
+	
 	private boolean isAm() {
 		return matcher.group(3).equals("AM");
 	}
 
+	private boolean isMidnight() {
+		return asString.equals("12:00 AM");
+	}
+
 	int payableHoursUntil(Time endTime) {
-		return max(0, (endTime.totalMinutes() - totalMinutes() + (Time.MIN_PER_HOUR - 1))/Time.MIN_PER_HOUR);
+		return max(0, (endTime.minutesSinceEarliest() - minutesSinceEarliest() + (Time.MIN_PER_HOUR - 1))/Time.MIN_PER_HOUR);
 	}
 	
 	public boolean isOnOrBefore(Time other) {
@@ -57,5 +78,4 @@ public class Time {
 	public boolean isOnOrAfter(Time other) {
 		return totalMinutes() >= other.totalMinutes();
 	}
-
 }

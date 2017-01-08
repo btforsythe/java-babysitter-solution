@@ -13,28 +13,28 @@ public class TimeTest {
 
 	@Test
 	public void shouldBeZeroMinutesForEarliestStartTime() {
-		assertThat(EARLIEST_START_TIME.minutesSinceStart(), is(0));
+		assertThat(EARLIEST_START_TIME.minutesSinceEarliest(), is(0));
 	}
 	
 	@Test
 	public void shouldCalculateMinutesOnTheHour() {
 		Time underTest = new Time("6:00 PM");
 		
-		assertThat(underTest.minutesSinceStart(), is(60));
+		assertThat(underTest.minutesSinceEarliest(), is(60));
 	}
 	
 	@Test
 	public void shouldIncludeMinutesPastTheHourInCalculation() {
 		Time underTest = new Time("6:30 PM");
 		
-		assertThat(underTest.minutesSinceStart(), is(90));
+		assertThat(underTest.minutesSinceEarliest(), is(90));
 	}
 	
 	@Test
 	public void shouldCalculateMinutesForAmTime() {
 		Time underTest = new Time("1:30 AM");
 		
-		assertThat(underTest.minutesSinceStart(), is(510));
+		assertThat(underTest.minutesSinceEarliest(), is(510));
 	}
 	
 	@Test
@@ -59,6 +59,14 @@ public class TimeTest {
 		Time end = new Time("5:00 PM");
 		
 		assertThat(start.payableHoursUntil(end), is(0));
+	}
+	
+	@Test
+	public void shouldCalculatePayableHoursFromMidnight() {
+		Time start = new Time("12:00 AM");
+		Time end = new Time("2:00 AM");
+		
+		assertThat(start.payableHoursUntil(end), is(2));
 	}
 	
 	@Test
