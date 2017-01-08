@@ -1,5 +1,6 @@
 package io.btforsythe.katas.babysitter;
 
+import static io.btforsythe.katas.babysitter.Time.MIDNIGHT;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -51,5 +52,11 @@ public class TimeTest {
 		Time end = new Time("8:30 PM");
 		
 		assertThat(end.payableHoursSince(start), is(4));
+	}
+	
+	@Test
+	public void shouldBeOnOrBeforeAnotherTimeForSameTime() {
+		
+		assertThat(MIDNIGHT.isOnOrBefore(MIDNIGHT), is(true));
 	}
 }
