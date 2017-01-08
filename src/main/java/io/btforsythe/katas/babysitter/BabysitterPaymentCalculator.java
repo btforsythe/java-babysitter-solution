@@ -19,8 +19,27 @@ public class BabysitterPaymentCalculator {
 	}
 
 	public int calculatePayment(Time startTime, Time endTime) {
-		int rate = startTime.isOnOrAfter(MIDNIGHT) ? AFTER_MIDNIGHT_RATE
-				: startTime.isOnOrAfter(bedTime) ? AFTER_BEDTIME_RATE : BEFORE_BEDTIME_RATE;
-		return 2 * rate;
+		return beforeBedTimePay(startTime, endTime) + betweenBedTimeAndMidnightPay(startTime, endTime) + afterMidnightPay(startTime);
+	}
+
+	private int beforeBedTimePay(Time startTime, Time endTime) {
+		return earlierOf(startTime, bedTime).payableHoursUntil(earlierOf(bedTime, endTime)) * BEFORE_BEDTIME_RATE;
+	}
+
+	private int betweenBedTimeAndMidnightPay(Time startTime, Time endTime) {
+		return laterOf(startTime, bedTime).payableHoursUntil(earlierOf(endTime, MIDNIGHT)) * AFTER_BEDTIME_RATE;
+	}
+
+	private int afterMidnightPay(Time startTime) {
+		int hoursAfterMidnight = startTime.isOnOrAfter(MIDNIGHT)? 2: 0;
+		return hoursAfterMidnight * AFTER_MIDNIGHT_RATE;
+	}
+
+	private Time earlierOf(Time time1, Time time2) {
+		return time1.isOnOrBefore(time2)? time1: time2;
+	}
+
+	private Time laterOf(Time time1, Time time2) {
+		return time1.isOnOrAfter(time2)? time1: time2;
 	}
 }
