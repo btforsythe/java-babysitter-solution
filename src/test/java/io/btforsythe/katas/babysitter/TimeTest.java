@@ -20,4 +20,11 @@ public class TimeTest {
 		
 		assertThat(underTest.minutesSinceStart(), is(60));
 	}
+	
+	@Test
+	public void shouldIncludeMinutesPastTheHourInCalculation() {
+		Time underTest = new Time("6:30 PM");
+		
+		assertThat(underTest.minutesSinceStart(), is(90));
+	}
 }
