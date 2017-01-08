@@ -13,4 +13,11 @@ public class TimeTest {
 		
 		assertThat(underTest.minutes(), is(0));
 	}
+	
+	@Test
+	public void shouldCalculateMinutesOnTheHour() {
+		Time underTest = new Time("6:00 PM");
+		
+		assertThat(underTest.minutes(), is(60));
+	}
 }
