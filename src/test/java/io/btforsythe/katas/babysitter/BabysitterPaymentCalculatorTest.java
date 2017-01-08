@@ -1,6 +1,7 @@
 package io.btforsythe.katas.babysitter;
 
 import static io.btforsythe.katas.babysitter.BabysitterPaymentCalculator.AFTER_BEDTIME_RATE;
+import static io.btforsythe.katas.babysitter.BabysitterPaymentCalculator.AFTER_MIDNIGHT_RATE;
 import static io.btforsythe.katas.babysitter.BabysitterPaymentCalculator.BEFORE_BEDTIME_RATE;
 import static io.btforsythe.katas.babysitter.Time.MIDNIGHT;
 import static org.hamcrest.Matchers.is;
@@ -28,5 +29,13 @@ public class BabysitterPaymentCalculatorTest {
 		int payment = underTest.calculatePayment("10:00 PM", "12:00 AM");
 		
 		assertThat(payment, is(2*AFTER_BEDTIME_RATE));
+	}
+	
+	@Test
+	public void shouldPayBabysitterForASessionAfterMidnight() {
+		
+		int payment = underTest.calculatePayment("12:00 AM", "2:00 AM");
+		
+		assertThat(payment, is(2*AFTER_MIDNIGHT_RATE));
 	}
 }
