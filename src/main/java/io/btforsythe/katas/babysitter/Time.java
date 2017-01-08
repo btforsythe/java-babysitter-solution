@@ -1,6 +1,7 @@
 package io.btforsythe.katas.babysitter;
 
 import static java.lang.Integer.parseInt;
+import static java.lang.Math.max;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,7 +47,7 @@ public class Time {
 	}
 
 	public int payableHoursSince(Time start) {
-		return (totalMinutes() - start.totalMinutes() + (MIN_PER_HOUR - 1))/MIN_PER_HOUR;
+		return max(0, (totalMinutes() - start.totalMinutes() + (MIN_PER_HOUR - 1))/MIN_PER_HOUR);
 	}
 
 	public boolean isOnOrBefore(Time other) {

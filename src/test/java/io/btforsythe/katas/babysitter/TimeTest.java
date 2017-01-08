@@ -54,6 +54,14 @@ public class TimeTest {
 	}
 	
 	@Test
+	public void shouldReturnZeroPayableHoursIfEndIsBeforeStart() {
+		Time start = new Time("8:30 PM");
+		Time end = new Time("5:00 PM");
+		
+		assertThat(end.payableHoursSince(start), is(0));
+	}
+	
+	@Test
 	public void shouldBeOnOrBeforeAnotherTimeForSameTime() {
 		
 		assertThat(MIDNIGHT.isOnOrBefore(MIDNIGHT), is(true));
