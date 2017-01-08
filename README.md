@@ -41,6 +41,6 @@ It's a good idea to sketch out the things we think we'll need tests around. I'll
 - [x] time objects should know when they are on or before another time
 - [ ] simple payments
     - [x] before bedtime
-    - [ ] between bedtime and midnight
+    - [x] between bedtime and midnight
     - [ ] after midnight
     
