@@ -1,5 +1,6 @@
 package io.btforsythe.katas.babysitter;
 
+import static io.btforsythe.katas.babysitter.Time.EARLIEST_START_TIME;
 import static io.btforsythe.katas.babysitter.Time.MIDNIGHT;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -12,9 +13,7 @@ public class TimeTest {
 
 	@Test
 	public void shouldBeZeroMinutesForEarliestStartTime() {
-		Time underTest = Time.EARLIEST_START_TIME;
-		
-		assertThat(underTest.minutesSinceStart(), is(0));
+		assertThat(EARLIEST_START_TIME.minutesSinceStart(), is(0));
 	}
 	
 	@Test
@@ -58,5 +57,10 @@ public class TimeTest {
 	public void shouldBeOnOrBeforeAnotherTimeForSameTime() {
 		
 		assertThat(MIDNIGHT.isOnOrBefore(MIDNIGHT), is(true));
+	}
+	
+	@Test
+	public void shouldNotBeOnOrBeforeForLaterTime() {
+		assertThat(MIDNIGHT.isOnOrBefore(EARLIEST_START_TIME), is(false));
 	}
 }

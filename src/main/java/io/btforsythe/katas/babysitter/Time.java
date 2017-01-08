@@ -49,7 +49,7 @@ public class Time {
 		return (totalMinutes() - start.totalMinutes() + (MIN_PER_HOUR - 1))/MIN_PER_HOUR;
 	}
 
-	public Object isOnOrBefore(Time other) {
-		return true;
+	public boolean isOnOrBefore(Time other) {
+		return totalMinutes() <= other.totalMinutes();
 	}
 }
