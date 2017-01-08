@@ -36,4 +36,12 @@ public class TimeTest {
 		
 		assertThat(underTest.minutesSinceStart(), is(510));
 	}
+	
+	@Test
+	public void shouldCalculatePayableHoursOnTheHour() {
+		Time start = new Time("5:00 PM");
+		Time end = new Time("8:00 PM");
+		
+		assertThat(end.payableHoursSince(start), is(3));
+	}
 }

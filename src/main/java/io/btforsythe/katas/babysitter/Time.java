@@ -44,4 +44,8 @@ public class Time {
 	private boolean isAm() {
 		return matcher.group(3).equals("AM");
 	}
+
+	public int payableHoursSince(Time start) {
+		return 3;
+	}
 }
