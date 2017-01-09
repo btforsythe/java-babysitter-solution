@@ -48,4 +48,7 @@ It's a good idea to sketch out the things we think we'll need tests around. I'll
 - [x] payments that span
     - [x] before bedtime + before midnight
     - [x] before midnight + after midnight
-    - [x] before bedtime + before midnight + after midnight 
+    - [x] before bedtime + before midnight + after midnight
+- [ ] time validation
+    - [ ] shouldn't allow a start time before 5 PM
+    - [ ] shouldn't allow an end time after 4 AM
