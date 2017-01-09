@@ -3,7 +3,6 @@ package io.btforsythe.katas.babysitter;
 import static io.btforsythe.katas.babysitter.BabysitterPaymentCalculator.AFTER_BEDTIME_RATE;
 import static io.btforsythe.katas.babysitter.BabysitterPaymentCalculator.AFTER_MIDNIGHT_RATE;
 import static io.btforsythe.katas.babysitter.BabysitterPaymentCalculator.BEFORE_BEDTIME_RATE;
-import static io.btforsythe.katas.babysitter.Time.MIDNIGHT;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -75,5 +74,11 @@ public class BabysitterPaymentCalculatorTest {
 		int payment = underTest.calculatePayment();
 
 		assertThat(payment, is(BEFORE_BEDTIME_RATE + 3 * AFTER_BEDTIME_RATE + AFTER_MIDNIGHT_RATE));
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void shouldNotAllowAStartTimeBefore5Pm() {
+		
+		initUnderTest("4:59 PM", "6:00 PM");
 	}
 }

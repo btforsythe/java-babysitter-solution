@@ -52,3 +52,5 @@ It's a good idea to sketch out the things we think we'll need tests around. I'll
 - [ ] time validation
     - [ ] shouldn't allow a start time before 5 PM
     - [ ] shouldn't allow an end time after 4 AM
+    - [ ] bedtime should be after 5 PM and before or on midnight
+    - [ ] end time should be after start time
