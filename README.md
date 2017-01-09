@@ -45,7 +45,7 @@ It's a good idea to sketch out the things we think we'll need tests around. I'll
     - [x] before bedtime
     - [x] between bedtime and midnight
     - [x] after midnight
-- [ ] payments that span
-    - [ ] before bedtime + before midnight
-    - [ ] before midnight + after midnight
+- [x] payments that span
+    - [x] before bedtime + before midnight
+    - [x] before midnight + after midnight
     - [ ] before bedtime + before midnight + after midnight 

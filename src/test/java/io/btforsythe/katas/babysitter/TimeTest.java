@@ -70,6 +70,14 @@ public class TimeTest {
 	}
 	
 	@Test
+	public void shouldCalculatePayableHoursFromMidnightHour() {
+		Time start = new Time("12:30 AM");
+		Time end = new Time("2:00 AM");
+		
+		assertThat(start.payableHoursUntil(end), is(2));	
+	}
+	
+	@Test
 	public void shouldBeOnOrBeforeAnotherTimeForSameTime() {
 		
 		assertThat(MIDNIGHT.isOnOrBefore(MIDNIGHT), is(true));

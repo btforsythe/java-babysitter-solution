@@ -13,18 +13,7 @@ public class Time {
 	private static final Pattern timePattern = Pattern.compile("(\\d+):(\\d+) ([AP]M)");
 
 	public static final Time EARLIEST_START_TIME = new Time("5:00 PM");
-	public static final Time MIDNIGHT = new Time("12:00 AM") {
-		/**
-		 * Hacking midnight since it lies on the boundary.
-		 */
-		private final int totalMinutes = new Time("11:59 PM").totalMinutes() + 1;
-		
-		@Override
-		protected int totalMinutes() {
-			return totalMinutes;
-		}
-		
-	};
+	public static final Time MIDNIGHT = new Time("12:00 AM");
 	
 	private String asString;
 	private Matcher matcher;
@@ -36,11 +25,19 @@ public class Time {
 	}
 
 	public int minutesSinceEarliest() {
-		return totalMinutes() + amOffset() - EARLIEST_START_TIME.totalMinutes();
+		return minutesSincePreviousMidnight() - EARLIEST_START_TIME.minutesSincePreviousMidnight();
 	}
 
-	protected int totalMinutes() {
-		return hour()*MIN_PER_HOUR + minutes();
+	protected int minutesSincePreviousMidnight() {
+		return ((isOneAmOrAfter()? hour() + 12: hour()) - EARLIEST_START_TIME.hour())*MIN_PER_HOUR + minutes();
+	}
+
+	private boolean isOneAmOrAfter() {
+		return isAm() && !isMidnightHour();
+	}
+
+	private boolean isMidnightHour() {
+		return hour() == 12 && isAm();
 	}
 
 	private int hour() {
@@ -51,20 +48,8 @@ public class Time {
 		return parseInt(matcher.group(2));
 	}
 
-	private int amOffset() {
-		return isAfterMidnight() ? MIDNIGHT.totalMinutes(): 0;
-	}
-
-	private boolean isAfterMidnight() {
-		return isAm() && !isMidnight();
-	}
-	
 	private boolean isAm() {
 		return matcher.group(3).equals("AM");
-	}
-
-	private boolean isMidnight() {
-		return asString.equals("12:00 AM");
 	}
 
 	int payableHoursUntil(Time endTime) {
@@ -72,11 +57,11 @@ public class Time {
 	}
 	
 	public boolean isOnOrBefore(Time other) {
-		return totalMinutes() <= other.totalMinutes();
+		return minutesSinceEarliest() <= other.minutesSinceEarliest();
 	}
 
 	public boolean isOnOrAfter(Time other) {
-		return totalMinutes() >= other.totalMinutes();
+		return minutesSinceEarliest() >= other.minutesSinceEarliest();
 	}
 
 	@Override

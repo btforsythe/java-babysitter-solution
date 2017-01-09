@@ -46,4 +46,12 @@ public class BabysitterPaymentCalculatorTest {
 		
 		assertThat(payment, is(BEFORE_BEDTIME_RATE + AFTER_BEDTIME_RATE));
 	}
+	
+	@Test
+	public void shouldPayBabysitterForASessionStartingAfterBedtimeAndEndingAfterMidnight() {
+		
+		int payment = underTest.calculatePayment("11:30 PM", "12:30 AM");
+		
+		assertThat(payment, is(AFTER_BEDTIME_RATE + AFTER_MIDNIGHT_RATE));
+	}
 }
