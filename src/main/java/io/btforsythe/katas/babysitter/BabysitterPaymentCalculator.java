@@ -46,7 +46,7 @@ public class BabysitterPaymentCalculator {
 	}
 
 	private void validateBedtime() {
-		if(bedtime.isOnOrBefore(EARLIEST_START_TIME)) {
+		if(bedtime.isOnOrBefore(EARLIEST_START_TIME) || MIDNIGHT.isOnOrBefore(bedtime)) {
 			throw new IllegalArgumentException();
 		}
 	}

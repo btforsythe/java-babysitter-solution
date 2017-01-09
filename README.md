@@ -49,8 +49,8 @@ It's a good idea to sketch out the things we think we'll need tests around. I'll
     - [x] before bedtime + before midnight
     - [x] before midnight + after midnight
     - [x] before bedtime + before midnight + after midnight
-- [ ] time validation
+- [x] time validation
     - [x] shouldn't allow a start time before 5 PM
     - [x] shouldn't allow an end time after 4 AM
-    - [ ] bedtime should be after 5 PM and before or on midnight
+    - [x] bedtime should be after 5 PM and before or on midnight
     - [x] end time should be after start time
