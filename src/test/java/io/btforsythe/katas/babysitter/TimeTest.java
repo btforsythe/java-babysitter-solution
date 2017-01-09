@@ -22,7 +22,6 @@ public class TimeTest {
 	public void shouldBeTwelveHoursSincePreviousMidnight() {
 		assertThat(MIDNIGHT.minutesSincePreviousNoon(), is(12*MIN_PER_HOUR));
 	}
-
 	
 	@Test
 	public void shouldIncludeMinutesPastTheHourInCalculation() {

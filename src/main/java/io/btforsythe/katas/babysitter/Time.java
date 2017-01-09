@@ -8,6 +8,14 @@ import java.util.regex.Pattern;
 
 public class Time {
 
+	public static Time laterOf(Time time1, Time time2) {
+		return time1.isOnOrAfter(time2)? time1: time2;
+	}
+
+	public static Time earlierOf(Time time1, Time time2) {
+		return time1.isOnOrBefore(time2)? time1: time2;
+	}
+
 	public static final int MIN_PER_HOUR = 60;
 
 	private static final Pattern timePattern = Pattern.compile("(\\d+):(\\d+) ([AP]M)");
@@ -32,7 +40,7 @@ public class Time {
 	}
 
 	private boolean isMidnightHour() {
-		return hour() == 12 && isAm();
+		return hour() == 12;
 	}
 
 	private int hour() {

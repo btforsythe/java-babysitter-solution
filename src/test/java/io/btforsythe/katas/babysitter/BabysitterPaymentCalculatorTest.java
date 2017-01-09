@@ -11,55 +11,59 @@ import org.junit.Test;
 
 public class BabysitterPaymentCalculatorTest {
 
-	private Time bedtime = new Time("9:30 PM");
-	
-	public BabysitterPaymentCalculator underTest = new BabysitterPaymentCalculator(bedtime);
-	
+	public BabysitterPaymentCalculator underTest;
+
 	@Test
 	public void shouldPayBabysitterForASessionEndingBeforeBedtime() {
-		
-		int payment = underTest.calculatePayment("6:00 PM", "8:00 PM");
-		
-		assertThat(payment, is(2*BEFORE_BEDTIME_RATE));
+
+		underTest = new BabysitterPaymentCalculator("6:00 PM", "8:00 PM", "9:30 PM");
+		int payment = underTest.calculatePayment();
+
+		assertThat(payment, is(2 * BEFORE_BEDTIME_RATE));
 	}
 
 	@Test
 	public void shouldPayBabysitterForASessionBetweenBedtimeAndMidnight() {
-		
-		int payment = underTest.calculatePayment("10:00 PM", "12:00 AM");
-		
-		assertThat(payment, is(2*AFTER_BEDTIME_RATE));
+
+		underTest = new BabysitterPaymentCalculator("10:00 PM", "12:00 AM", "9:30 PM");
+		int payment = underTest.calculatePayment();
+
+		assertThat(payment, is(2 * AFTER_BEDTIME_RATE));
 	}
-	
+
 	@Test
 	public void shouldPayBabysitterForASessionAfterMidnight() {
-		
-		int payment = underTest.calculatePayment("12:00 AM", "2:00 AM");
-		
-		assertThat(payment, is(2*AFTER_MIDNIGHT_RATE));
+
+		underTest = new BabysitterPaymentCalculator("12:00 AM", "2:00 AM", "9:30 PM");
+		int payment = underTest.calculatePayment();
+
+		assertThat(payment, is(2 * AFTER_MIDNIGHT_RATE));
 	}
-	
+
 	@Test
 	public void shouldPayBabysitterForASessionStartingBeforeBedtimeAndEndingBetweenBedtimeAndMidnight() {
-		
-		int payment = underTest.calculatePayment("9:00 PM", "10:00 PM");
-		
+
+		underTest = new BabysitterPaymentCalculator("9:00 PM", "10:00 PM", "9:30 PM");
+		int payment = underTest.calculatePayment();
+
 		assertThat(payment, is(BEFORE_BEDTIME_RATE + AFTER_BEDTIME_RATE));
 	}
-	
+
 	@Test
 	public void shouldPayBabysitterForASessionStartingAfterBedtimeAndEndingAfterMidnight() {
-		
-		int payment = underTest.calculatePayment("11:30 PM", "12:30 AM");
-		
+
+		underTest = new BabysitterPaymentCalculator("11:30 PM", "12:30 AM", "9:30 PM");
+		int payment = underTest.calculatePayment();
+
 		assertThat(payment, is(AFTER_BEDTIME_RATE + AFTER_MIDNIGHT_RATE));
 	}
-	
+
 	@Test
 	public void shouldPayBabysitterForASessionStartingBeforeBedtimeAndEndingAfterMidnight() {
-		
-		int payment = underTest.calculatePayment("8:30 PM", "12:30 AM");
-		
-		assertThat(payment, is(BEFORE_BEDTIME_RATE + 3*AFTER_BEDTIME_RATE + AFTER_MIDNIGHT_RATE));
+
+		underTest = new BabysitterPaymentCalculator("8:30 PM", "12:30 AM", "9:30 PM");
+		int payment = underTest.calculatePayment();
+
+		assertThat(payment, is(BEFORE_BEDTIME_RATE + 3 * AFTER_BEDTIME_RATE + AFTER_MIDNIGHT_RATE));
 	}
 }

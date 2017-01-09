@@ -1,6 +1,8 @@
 package io.btforsythe.katas.babysitter;
 
 import static io.btforsythe.katas.babysitter.Time.MIDNIGHT;
+import static io.btforsythe.katas.babysitter.Time.earlierOf;
+import static io.btforsythe.katas.babysitter.Time.laterOf;
 
 public class BabysitterPaymentCalculator {
 
@@ -8,37 +10,32 @@ public class BabysitterPaymentCalculator {
 	public static final int AFTER_BEDTIME_RATE = 8;
 	public static final int AFTER_MIDNIGHT_RATE = 16;
 
+	private Time startTime;
+	private Time endTime;
 	private Time bedTime;
 
-	public BabysitterPaymentCalculator(Time bedTime) {
+	public BabysitterPaymentCalculator(String startTime, String endTime, String bedTime) {
+		this(new Time(startTime), new Time(endTime), new Time(bedTime));
+	}
+	public BabysitterPaymentCalculator(Time startTime, Time endTime, Time bedTime) {
+		this.startTime = startTime;
+		this.endTime = endTime;
 		this.bedTime = bedTime;
 	}
 
-	public int calculatePayment(String start, String end) {
-		return calculatePayment(new Time(start), new Time(end));
+	public int calculatePayment() {
+		return beforeBedTimePay() + betweenBedTimeAndMidnightPay() + afterMidnightPay();
 	}
 
-	public int calculatePayment(Time startTime, Time endTime) {
-		return beforeBedTimePay(startTime, endTime) + betweenBedTimeAndMidnightPay(startTime, endTime) + afterMidnightPay(startTime, endTime);
-	}
-
-	private int beforeBedTimePay(Time startTime, Time endTime) {
+	private int beforeBedTimePay() {
 		return earlierOf(startTime, bedTime).payableHoursUntil(earlierOf(bedTime, endTime)) * BEFORE_BEDTIME_RATE;
 	}
 
-	private int betweenBedTimeAndMidnightPay(Time startTime, Time endTime) {
+	private int betweenBedTimeAndMidnightPay() {
 		return laterOf(startTime, bedTime).payableHoursUntil(earlierOf(endTime, MIDNIGHT)) * AFTER_BEDTIME_RATE;
 	}
 
-	private int afterMidnightPay(Time startTime, Time endTime) {
+	private int afterMidnightPay() {
 		return laterOf(startTime, MIDNIGHT).payableHoursUntil(endTime) * AFTER_MIDNIGHT_RATE;
-	}
-
-	private Time earlierOf(Time time1, Time time2) {
-		return time1.isOnOrBefore(time2)? time1: time2;
-	}
-
-	private Time laterOf(Time time1, Time time2) {
-		return time1.isOnOrAfter(time2)? time1: time2;
 	}
 }
