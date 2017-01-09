@@ -40,7 +40,7 @@ public class BabysitterPaymentCalculator {
 
 
 	private void validateEndTime() {
-		if(endTime.isOnOrAfter(LATEST_END_TIME)) {
+		if(!endTime.isOnOrBefore(LATEST_END_TIME)) {
 			throw new IllegalArgumentException();
 		}
 	}
