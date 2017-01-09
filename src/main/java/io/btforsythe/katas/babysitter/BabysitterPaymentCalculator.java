@@ -11,6 +11,7 @@ public class BabysitterPaymentCalculator {
 	public static final int AFTER_MIDNIGHT_RATE = 16;
 
 	public static final Time EARLIEST_START_TIME = new Time("5:00 PM");
+	public static final Time LATEST_END_TIME = new Time("4:00 AM");
 	
 	private Time startTime;
 	private Time endTime;
@@ -26,12 +27,20 @@ public class BabysitterPaymentCalculator {
 		validateStartTime();
 		
 		this.endTime = endTime;
+		validateEndTime();
 		
 		this.bedTime = bedTime;
 	}
 
 	private void validateStartTime() {
 		if(!startTime.isOnOrAfter(EARLIEST_START_TIME)) {
+			throw new IllegalArgumentException();
+		}
+	}
+
+
+	private void validateEndTime() {
+		if(endTime.isOnOrAfter(LATEST_END_TIME)) {
 			throw new IllegalArgumentException();
 		}
 	}
