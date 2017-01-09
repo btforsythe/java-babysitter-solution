@@ -81,4 +81,10 @@ public class BabysitterPaymentCalculatorTest {
 		
 		initUnderTest("4:59 PM", "6:00 PM");
 	}
+	
+	@Test
+	public void shouldAllowStartTimeAtExactly5Pm() {
+		
+		initUnderTest("5:00 PM", "6:00 PM");
+	}
 }

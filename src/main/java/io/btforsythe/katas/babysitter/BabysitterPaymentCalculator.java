@@ -31,7 +31,7 @@ public class BabysitterPaymentCalculator {
 	}
 
 	private void validateStartTime() {
-		if(startTime.isOnOrBefore(EARLIEST_START_TIME)) {
+		if(!startTime.isOnOrAfter(EARLIEST_START_TIME)) {
 			throw new IllegalArgumentException();
 		}
 	}
