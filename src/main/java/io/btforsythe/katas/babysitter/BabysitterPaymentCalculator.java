@@ -15,13 +15,13 @@ public class BabysitterPaymentCalculator {
 	
 	private Time startTime;
 	private Time endTime;
-	private Time bedTime;
+	private Time bedtime;
 
-	public BabysitterPaymentCalculator(String startTime, String endTime, String bedTime) {
-		this(new Time(startTime), new Time(endTime), new Time(bedTime));
+	public BabysitterPaymentCalculator(String startTime, String endTime, String bedtime) {
+		this(new Time(startTime), new Time(endTime), new Time(bedtime));
 	}
 	
-	public BabysitterPaymentCalculator(Time startTime, Time endTime, Time bedTime) {
+	public BabysitterPaymentCalculator(Time startTime, Time endTime, Time bedtime) {
 		
 		this.startTime = startTime;
 		validateStartTime();
@@ -29,7 +29,8 @@ public class BabysitterPaymentCalculator {
 		this.endTime = endTime;
 		validateEndTime();
 		
-		this.bedTime = bedTime;
+		this.bedtime = bedtime;
+		validateBedtime();
 	}
 
 	private void validateStartTime() {
@@ -38,9 +39,14 @@ public class BabysitterPaymentCalculator {
 		}
 	}
 
-
 	private void validateEndTime() {
 		if(!endTime.isOnOrBefore(LATEST_END_TIME) || endTime.isOnOrBefore(startTime)) {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	private void validateBedtime() {
+		if(bedtime.isOnOrBefore(EARLIEST_START_TIME)) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -50,11 +56,11 @@ public class BabysitterPaymentCalculator {
 	}
 
 	private int beforeBedTimePay() {
-		return earlierOf(startTime, bedTime).payableHoursUntil(earlierOf(bedTime, endTime)) * BEFORE_BEDTIME_RATE;
+		return earlierOf(startTime, bedtime).payableHoursUntil(earlierOf(bedtime, endTime)) * BEFORE_BEDTIME_RATE;
 	}
 
 	private int betweenBedTimeAndMidnightPay() {
-		return laterOf(startTime, bedTime).payableHoursUntil(earlierOf(endTime, MIDNIGHT)) * AFTER_BEDTIME_RATE;
+		return laterOf(startTime, bedtime).payableHoursUntil(earlierOf(endTime, MIDNIGHT)) * AFTER_BEDTIME_RATE;
 	}
 
 	private int afterMidnightPay() {

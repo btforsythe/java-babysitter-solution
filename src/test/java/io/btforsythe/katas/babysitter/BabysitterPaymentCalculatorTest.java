@@ -100,4 +100,9 @@ public class BabysitterPaymentCalculatorTest {
 	public void shouldNotAllowEndTimeBeforeStartTime() {
 		initUnderTest("4:00 AM", "5:00 PM");
 	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void shouldRequireBedtimeAfter5Pm() {
+		new BabysitterPaymentCalculator("5:00 PM", "6:00 PM", "5:00 PM");
+	}
 }
