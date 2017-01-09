@@ -8,11 +8,10 @@ import java.util.regex.Pattern;
 
 public class Time {
 
-	private static final int MIN_PER_HOUR = 60;
+	public static final int MIN_PER_HOUR = 60;
 
 	private static final Pattern timePattern = Pattern.compile("(\\d+):(\\d+) ([AP]M)");
 
-	public static final Time EARLIEST_START_TIME = new Time("5:00 PM");
 	public static final Time MIDNIGHT = new Time("12:00 AM");
 	
 	private String asString;
@@ -24,12 +23,8 @@ public class Time {
 		matcher.matches();
 	}
 
-	public int minutesSinceEarliest() {
-		return minutesSincePreviousMidnight() - EARLIEST_START_TIME.minutesSincePreviousMidnight();
-	}
-
-	protected int minutesSincePreviousMidnight() {
-		return ((isOneAmOrAfter()? hour() + 12: hour()) - EARLIEST_START_TIME.hour())*MIN_PER_HOUR + minutes();
+	protected int minutesSincePreviousNoon() {
+		return (isOneAmOrAfter()? hour() + 12: hour())*MIN_PER_HOUR + minutes();
 	}
 
 	private boolean isOneAmOrAfter() {
@@ -53,15 +48,15 @@ public class Time {
 	}
 
 	int payableHoursUntil(Time endTime) {
-		return max(0, (endTime.minutesSinceEarliest() - minutesSinceEarliest() + (Time.MIN_PER_HOUR - 1))/Time.MIN_PER_HOUR);
+		return max(0, (endTime.minutesSincePreviousNoon() - minutesSincePreviousNoon() + (Time.MIN_PER_HOUR - 1))/Time.MIN_PER_HOUR);
 	}
 	
 	public boolean isOnOrBefore(Time other) {
-		return minutesSinceEarliest() <= other.minutesSinceEarliest();
+		return minutesSincePreviousNoon() <= other.minutesSincePreviousNoon();
 	}
 
 	public boolean isOnOrAfter(Time other) {
-		return minutesSinceEarliest() >= other.minutesSinceEarliest();
+		return minutesSincePreviousNoon() >= other.minutesSincePreviousNoon();
 	}
 
 	@Override

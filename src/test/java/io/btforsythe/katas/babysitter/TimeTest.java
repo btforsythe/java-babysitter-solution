@@ -1,45 +1,46 @@
 package io.btforsythe.katas.babysitter;
 
-import static io.btforsythe.katas.babysitter.Time.EARLIEST_START_TIME;
 import static io.btforsythe.katas.babysitter.Time.MIDNIGHT;
+import static io.btforsythe.katas.babysitter.Time.MIN_PER_HOUR;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-
-import java.util.regex.Pattern;
 
 import org.junit.Test;
 
 public class TimeTest {
 
-	@Test
-	public void shouldBeZeroMinutesForEarliestStartTime() {
-		assertThat(EARLIEST_START_TIME.minutesSinceEarliest(), is(0));
-	}
-	
+	private static final Time FIVE_PM = new Time("5:00 PM");
+
 	@Test
 	public void shouldCalculateMinutesOnTheHour() {
 		Time underTest = new Time("6:00 PM");
 		
-		assertThat(underTest.minutesSinceEarliest(), is(60));
+		assertThat(underTest.minutesSincePreviousNoon(), is(6*MIN_PER_HOUR));
 	}
+	
+	@Test
+	public void shouldBeTwelveHoursSincePreviousMidnight() {
+		assertThat(MIDNIGHT.minutesSincePreviousNoon(), is(12*MIN_PER_HOUR));
+	}
+
 	
 	@Test
 	public void shouldIncludeMinutesPastTheHourInCalculation() {
 		Time underTest = new Time("6:30 PM");
 		
-		assertThat(underTest.minutesSinceEarliest(), is(90));
+		assertThat(underTest.minutesSincePreviousNoon(), is(6*MIN_PER_HOUR + 30));
 	}
 	
 	@Test
 	public void shouldCalculateMinutesForAmTime() {
 		Time underTest = new Time("1:30 AM");
 		
-		assertThat(underTest.minutesSinceEarliest(), is(510));
+		assertThat(underTest.minutesSincePreviousNoon(), is(13*MIN_PER_HOUR + 30));
 	}
 	
 	@Test
 	public void shouldCalculatePayableHoursOnTheHour() {
-		Time start = new Time("5:00 PM");
+		Time start = FIVE_PM;
 		Time end = new Time("8:00 PM");
 		
 		assertThat(start.payableHoursUntil(end), is(3));
@@ -47,7 +48,7 @@ public class TimeTest {
 	
 	@Test
 	public void shouldRoundUpPayableHours() {
-		Time start = new Time("5:00 PM");
+		Time start = FIVE_PM;
 		Time end = new Time("8:30 PM");
 		
 		assertThat(start.payableHoursUntil(end), is(4));
@@ -56,7 +57,7 @@ public class TimeTest {
 	@Test
 	public void shouldReturnZeroPayableHoursIfEndIsBeforeStart() {
 		Time start = new Time("8:30 PM");
-		Time end = new Time("5:00 PM");
+		Time end = FIVE_PM;
 		
 		assertThat(start.payableHoursUntil(end), is(0));
 	}
@@ -85,17 +86,17 @@ public class TimeTest {
 	
 	@Test
 	public void shouldNotBeOnOrBeforeForLaterTime() {
-		assertThat(MIDNIGHT.isOnOrBefore(EARLIEST_START_TIME), is(false));
+		assertThat(MIDNIGHT.isOnOrBefore(FIVE_PM), is(false));
 	}
 	
 	@Test
 	public void shouldBeAfterEarlierTime() {
-		assertThat(MIDNIGHT.isOnOrAfter(EARLIEST_START_TIME), is(true));
+		assertThat(MIDNIGHT.isOnOrAfter(FIVE_PM), is(true));
 	}
 	
 	@Test
 	public void shouldNotBeAfterLaterTime() {
-		assertThat(EARLIEST_START_TIME.isOnOrAfter(MIDNIGHT), is(false));
+		assertThat(FIVE_PM.isOnOrAfter(MIDNIGHT), is(false));
 	}
 	
 	@Test
